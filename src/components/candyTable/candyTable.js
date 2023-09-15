@@ -1,51 +1,75 @@
 import React from "react";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Button,
+} from "@mui/material";
 
 function CandyTable({ candyData, updateCandiesQuantity, URL }) {
-  const buyOneHandler = (event) => {
+  const buyHandler = (event, amount) => {
     event.preventDefault();
-    const candy_id = event.target.parentElement.parentElement.id;
-    updateCandiesQuantity(URL, 1, candy_id);
+    const candy_id = event.currentTarget.parentElement.parentElement.id;
+    updateCandiesQuantity(URL, amount, candy_id);
   };
-  const buy2Handler = (event) => {
-    event.preventDefault();
-    const candy_id = event.target.parentElement.parentElement.id;
-    updateCandiesQuantity(URL, 2, candy_id);
-  };
-  const buy3Handler = (event) => {
-    event.preventDefault();
-    const candy_id = event.target.parentElement.parentElement.id;
-    updateCandiesQuantity(URL, 3, candy_id);
-  };
+
   return (
-    <table>
-      <thead>
-        <tr>
-          <th>Candy Name</th>
-          <th>Description</th>
-          <th>Price</th>
-          <th>Quantity</th>
-        </tr>
-      </thead>
-      <tbody>
-        {candyData.map((candy) => (
-          <tr key={candy._id} id={candy._id}>
-            <td>{candy.candyName}</td>
-            <td>{candy.description}</td>
-            <td>${candy.price}</td>
-            <td>{candy.quantity}</td>
-            <td>
-              <button onClick={buyOneHandler}>BuyOne</button>
-            </td>
-            <td>
-              <button onClick={buy2Handler}>Buy2</button>
-            </td>
-            <td>
-              <button onClick={buy3Handler}>Buy3</button>
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
+    <TableContainer>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell>Candy Name</TableCell>
+            <TableCell>Description</TableCell>
+            <TableCell>Price</TableCell>
+            <TableCell>Quantity</TableCell>
+            <TableCell>Actions</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {candyData.map((candy) => (
+            <TableRow key={candy._id} id={candy._id}>
+              <TableCell>{candy.candyName}</TableCell>
+              <TableCell>{candy.description}</TableCell>
+              <TableCell>${candy.price}</TableCell>
+              <TableCell>{candy.quantity}</TableCell>
+              <TableCell
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Button
+                  variant="contained"
+                  size="small"
+                  onClick={(e) => buyHandler(e, 1)}
+                >
+                  Buy One
+                </Button>
+                <Button
+                  variant="contained"
+                  size="small"
+                  onClick={(e) => buyHandler(e, 2)}
+                  disabled={candy.quantity < 2}
+                >
+                  Buy Two
+                </Button>
+                <Button
+                  variant="contained"
+                  size="small"
+                  onClick={(e) => buyHandler(e, 3)}
+                  disabled={candy.quantity < 3}
+                >
+                  Buy Three
+                </Button>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 }
 

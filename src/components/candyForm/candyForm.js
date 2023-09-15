@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { TextField, Button, Grid } from "@mui/material";
 
 function CandyForm({ onAddCandy }) {
   const [formData, setFormData] = useState({
@@ -29,48 +30,69 @@ function CandyForm({ onAddCandy }) {
 
   return (
     <form onSubmit={handleSubmit}>
-      <label htmlFor="candyName">Candy Name:</label>
-      <input
-        type="text"
-        id="candyName"
-        name="candyName"
-        value={formData.candyName}
-        onChange={handleChange}
-        required
-      />
-
-      <label htmlFor="description">Description:</label>
-      <input
-        type="text"
-        id="description"
-        name="description"
-        value={formData.description}
-        onChange={handleChange}
-        required
-      />
-
-      <label htmlFor="price">Price:</label>
-      <input
-        type="number"
-        id="price"
-        name="price"
-        step="0.01"
-        value={formData.price}
-        onChange={handleChange}
-        required
-      />
-
-      <label htmlFor="quantity">Quantity:</label>
-      <input
-        type="number"
-        id="quantity"
-        name="quantity"
-        value={formData.quantity}
-        onChange={handleChange}
-        required
-      />
-
-      <button type="submit">Add Item</button>
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <TextField
+            fullWidth
+            label="Candy Name"
+            variant="outlined"
+            id="candyName"
+            name="candyName"
+            value={formData.candyName}
+            onChange={handleChange}
+            required
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            fullWidth
+            label="Description"
+            variant="outlined"
+            id="description"
+            name="description"
+            value={formData.description}
+            onChange={handleChange}
+            required
+          />
+        </Grid>
+        <Grid item xs={6}>
+          <TextField
+            fullWidth
+            label="Price"
+            variant="outlined"
+            type="number"
+            step="0.01"
+            id="price"
+            name="price"
+            value={formData.price}
+            onChange={handleChange}
+            required
+          />
+        </Grid>
+        <Grid item xs={6}>
+          <TextField
+            fullWidth
+            label="Quantity"
+            variant="outlined"
+            type="number"
+            id="quantity"
+            name="quantity"
+            value={formData.quantity}
+            onChange={handleChange}
+            required
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Button
+            type="submit"
+            variant="contained"
+            size="small"
+            color="primary"
+          >
+            Add Item
+          </Button>
+        </Grid>
+      </Grid>
     </form>
   );
 }

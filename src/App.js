@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./App.css";
+import { Container, Typography } from "@mui/material";
 import CandyForm from "./components/candyForm/candyForm";
 import CandyTable from "./components/candyTable/candyTable";
 import axios from "axios";
@@ -40,16 +40,6 @@ function App() {
   };
 
   useEffect(() => {
-    const fetchCandies = async () => {
-      try {
-        const response = await axios.get(URL);
-        const data = response.data.filter((candy) => candy.quantity !== 0);
-        setCandyData(data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
     fetchCandies();
   }, []);
 
@@ -59,8 +49,10 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <h1>Candy Shop</h1>
+    <Container maxWidth="md">
+      <Typography variant="h1" component="h1" align="center">
+        Candy Shop
+      </Typography>
       <CandyForm onAddCandy={handleAddCandy} />
       {candyData.length ? (
         <CandyTable
@@ -71,7 +63,7 @@ function App() {
       ) : (
         ""
       )}
-    </div>
+    </Container>
   );
 }
 
