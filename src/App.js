@@ -4,42 +4,46 @@ import CandyForm from "./components/candyForm/candyForm";
 import CandyTable from "./components/candyTable/candyTable";
 import axios from "axios";
 
-const URL = "https://crudcrud.com/api/57685d4120ab4b1a87417be1d1d1dd85/candies";
-
-const addCandy = async (url, payload) => {
-  try {
-    const response = await axios.post(url, payload);
-    const data = await response.data;
-    return data;
-  } catch (error) {
-    console.error(error);
-  }
-};
-
-const updateCandiesQuantity = async (url, lessBy, id) => {
-  try {
-    const initial_candy_response = await axios.get(`${url}/${id}`);
-    const initial_candy = initial_candy_response.data;
-    console.log({ initial_candy });
-    initial_candy.quantity = parseInt(initial_candy.quantity) - lessBy;
-    console.log(initial_candy);
-    const response = await axios.put(`${url}/${id}`, initial_candy);
-    console.log({ response });
-    const final_candy = await axios.get(`${url}/${id}`);
-    console.log({ final_candy });
-  } catch (error) {
-    console.error(error);
-  }
-};
+const URL = "http://localhost:3000/candies";
 
 function App() {
   const [candyData, setCandyData] = useState([]);
+
+  const fetchCandies = async () => {
+    try {
+      const response = await axios.get(URL);
+      const data = response.data.filter((candy) => candy.quantity !== 0);
+      setCandyData(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const addCandy = async (url, payload) => {
+    try {
+      const response = await axios.post(url, payload);
+      const data = await response.data;
+      return data;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const updateCandiesQuantity = async (url, lessBy, id) => {
+    try {
+      const response = await axios.put(`${url}/${id}/reduceQuantity/${lessBy}`);
+      console.log(response);
+      fetchCandies();
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   useEffect(() => {
     const fetchCandies = async () => {
       try {
         const response = await axios.get(URL);
-        const data = response.data;
+        const data = response.data.filter((candy) => candy.quantity !== 0);
         setCandyData(data);
       } catch (error) {
         console.error(error);

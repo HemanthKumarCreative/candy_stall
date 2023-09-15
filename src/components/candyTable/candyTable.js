@@ -6,6 +6,16 @@ function CandyTable({ candyData, updateCandiesQuantity, URL }) {
     const candy_id = event.target.parentElement.parentElement.id;
     updateCandiesQuantity(URL, 1, candy_id);
   };
+  const buy2Handler = (event) => {
+    event.preventDefault();
+    const candy_id = event.target.parentElement.parentElement.id;
+    updateCandiesQuantity(URL, 2, candy_id);
+  };
+  const buy3Handler = (event) => {
+    event.preventDefault();
+    const candy_id = event.target.parentElement.parentElement.id;
+    updateCandiesQuantity(URL, 3, candy_id);
+  };
   return (
     <table>
       <thead>
@@ -27,10 +37,10 @@ function CandyTable({ candyData, updateCandiesQuantity, URL }) {
               <button onClick={buyOneHandler}>BuyOne</button>
             </td>
             <td>
-              <button>Buy2</button>
+              <button onClick={buy2Handler}>Buy2</button>
             </td>
             <td>
-              <button>Buy3</button>
+              <button onClick={buy3Handler}>Buy3</button>
             </td>
           </tr>
         ))}
